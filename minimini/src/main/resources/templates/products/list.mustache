@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+
+</head>
+<body>
+<!--arert msg -->
+{{#msg}}
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <div>
+            {{msg}}
+        </div>
+    </div>
+{{/msg}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">NAME</th>
+        <th scope="col">PRICE</th>
+        <th scope="col">COUNT</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#productList}}
+        <tr>
+            <td><a href="/products/{{id}}">{{id}}</a></td>
+            <td>{{name}}</td>
+            <td>{{price}}</td>
+            <td>{{count}}</td>
+        </tr>
+    {{/productList}}
+    </tbody>
+</table>
+
+<a href="/products/new">New Product</a>
+</body>
+</html>
