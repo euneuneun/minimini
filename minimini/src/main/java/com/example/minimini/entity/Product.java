@@ -1,8 +1,5 @@
 package com.example.minimini.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,20 +9,30 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity // DB가 해당 객체 인식 가능!
+@Entity // 해당 클래스로 table을 만드는 것
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 id를 자동 생성해주는 어노테이션
     private Long id;
 
-    @Column
+    @Column // 테이블 안의 컬럼들을 지정한 것임
     private String name;
 
     @Column
-    private int price;
+    private Integer price;
 
     @Column
-    private int count;
+    private Integer count;
 
+    public void patch(Product product) {
+        if (product.name != null)
+            this.name = product.name;
+
+        if (product.price != null)
+            this.price = product.price;
+
+        if (product.count != null)
+            this.count = product.count;
+    }
 }
