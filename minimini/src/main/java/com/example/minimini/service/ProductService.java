@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -91,4 +92,7 @@ public class ProductService {
     }
 
 
+    public Optional<Object> findById(Long productId) {
+        return null;
+    }
 }
