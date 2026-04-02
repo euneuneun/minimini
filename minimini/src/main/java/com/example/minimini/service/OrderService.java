@@ -58,7 +58,7 @@ public class OrderService {
 
     public Page<OrderResponse> getOrders(Pageable pageable) {
     // 1. DB에서 페이지 단위로 order 조회
-        Page<Order> orderPage = orderRepository.findAll(pageable);
+        Page<Order> orderPage = orderRepository.findAllWithProduct(pageable);
         return orderPage.map(OrderResponse::new);
     }
 

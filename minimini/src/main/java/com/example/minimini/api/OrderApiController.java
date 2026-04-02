@@ -25,7 +25,7 @@ public class OrderApiController {
     private OrderService orderService;
 
 
-// 전체 목록 조회 (페이지네이션)
+    // 전체 목록 조회 (페이지네이션)
     @GetMapping("/api/orders")
     public Page<OrderResponse> getProducts(@PageableDefault(page=0, size=3,sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         return orderService.getOrders(pageable);
