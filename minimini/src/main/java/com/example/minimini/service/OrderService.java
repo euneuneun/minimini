@@ -7,9 +7,13 @@ import com.example.minimini.entity.Order;
 import com.example.minimini.entity.Product;
 import com.example.minimini.repository.OrderRepository;
 import com.example.minimini.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+
 
 @Slf4j
 @Service
@@ -22,7 +26,10 @@ public class OrderService {
     private ProductRepository productRepository;
 
     // 주문 생성
+    @Transactional
     public OrderResponse create(OrderForm form) {
+        log.info("주문 생성 요청: {}",form);
+
         // 1. productId로 실제 Product 찾기
         Product product = productRepository.findById(form.getProductId()).orElse(null);
 
@@ -35,6 +42,7 @@ public class OrderService {
         // 3. Order 엔티티 생성 후 저장
         Order order = new Order(null, product, form.getQuantity());
         Order saved = orderRepository.save(order);
+        log.info("주문 생성 완료: {}", saved);
 
         // 4. 응답 DTO로 변환해서 반환
         return new OrderResponse(saved);
@@ -46,4 +54,12 @@ public class OrderService {
         if (order == null) return null;
         return new OrderResponse(order);
     }
+
+
+    public Page<OrderResponse> getOrders(Pageable pageable) {
+    // 1. DB에서 페이지 단위로 order 조회
+        Page<Order> orderPage = orderRepository.findAll(pageable);
+        return orderPage.map(OrderResponse::new);
+    }
+
 }

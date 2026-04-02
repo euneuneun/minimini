@@ -11,9 +11,9 @@ public class ProductForm {
     private Long id;
     private String name;
     private int price;
-    private int count;
+    private int stock; // 재고 역할
 
     public Product toEntity() {
-        return new Product(id, name ,price, count);
+        return new Product(id, name ,price, stock);
     }
 }

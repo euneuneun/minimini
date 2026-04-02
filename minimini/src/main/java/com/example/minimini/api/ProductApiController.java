@@ -51,7 +51,7 @@ public class ProductApiController {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    //DELETE
+    //DELETE(삭제)
     @DeleteMapping("/api/products/{id}")
     public ResponseEntity<Product> delete(@PathVariable Long id){
 
