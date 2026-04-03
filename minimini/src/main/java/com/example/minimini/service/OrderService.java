@@ -31,13 +31,24 @@ public class OrderService {
         log.info("주문 생성 요청: {}",form);
 
         // 1. productId로 실제 Product 찾기
-        Product product = productRepository.findById(form.getProductId()).orElse(null);
+        Product product = productRepository.findByWithLock(form.getProductId()).orElse(null);
 
         // 2. 상품이 없으면 null 반환
         if (product == null) {
             log.info("상품을 찾을 수 없습니다. productId: {}", form.getProductId());
             return null;
         }
+
+        // 2-1. 재고 확인
+        if(product.getStock() < form.getQuantity()){
+            log.info("재고 부족. 현재 재고 : {}, 요청 수량:{}", product.getStock(),form.getQuantity());
+            return null;
+        }
+
+        // 2-2 . 재고 차감 (dirty checking으로 자동 UPDATE)
+        product.decreaseStock(form.getQuantity());
+
+        log.info("재고 차감 완료. 남은 재고: {}", product.getStock());
 
         // 3. Order 엔티티 생성 후 저장
         Order order = new Order(null, product, form.getQuantity());

@@ -36,4 +36,12 @@ public class Product {
         if (product.stock != null)
             this.stock = product.stock;
     }
+
+    public void decreaseStock(int quanity){
+        if (this.stock < quanity){
+            throw new IllegalStateException("재고 부족");
+        }
+
+        this.stock -= quanity;
+    }
 }
